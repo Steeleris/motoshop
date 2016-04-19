@@ -1,0 +1,3 @@
+moto_homepage:
+    path:     /
+    defaults: { _controller: MotoBundle:Product:show }

@@ -1,0 +1,13 @@
+/* Login block */
+
+.login-block{
+    position: absolute;
+    z-index: 1001;
+    right: 0;
+    background-color: #f8f8f8;
+    border: 1px solid #e7e7e7;
+    padding: 20px;
+    width: 300px;
+    display: none;
+    border-radius: 0 0 10px 10px;
+}

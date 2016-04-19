@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% stylesheets
+        '../bower_components/bootstrap/dist/css/bootstrap.min.css'
+        '../app/Resources/css/navbar.css'
+        filter='cssrewrite' output='css/compiled/app.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    {% block stylesheet %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+    {% block body %}{% endblock %}
+    {% block javascripts %}
+        {% javascripts
+            '../bower_components/jquery/dist/jquery.min.js'
+            '../bower_components/bootstrap/dist/js/bootstrap.min.js'
+            '../app/Resources/js/navbar.js' %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+
+</body>
+</html>
