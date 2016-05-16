@@ -3,7 +3,6 @@
 {% block body %}
 <nav class="navbar navbar-default">
     <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -13,17 +12,16 @@
             </button>
             <a class="navbar-brand" href="#">MotoShop</a>
         </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li>
-            </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
-                <li>
-                    <a href="#" class="login-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
+                <li class="hidden-xs">
+                    <a class="login-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <b>{{ app.user.username }}</b> <span class="caret"></span>
+                        {% else %}
+                            Login <span class="caret"></span>
+                        {% endif %}
+                    </a>
                     <div class="login-block">
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             <div>
@@ -38,11 +36,145 @@
                         {% endif %}
                     </div>
                 </li>
+                <li class="visible-xs">
+                    <a data-toggle="dropdown" role="button" aria-expanded="false">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <b>{{ app.user.username }}</b> <span class="caret"></span>
+                        {% else %}
+                            Login <span class="caret"></span>
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                <div>
+                                    <p>
+                                        <label>Username:</label> {{ app.user.username }}<br>
+                                        <label>E-mail:</label> {{ app.user.email }}
+                                    </p>
+                                </div>
+                                <a class="btn btn-danger pull-right" href="{{ path('fos_user_security_logout') }}">Logout</a>
+                            {% else %}
+                                {{ render(controller('UserBundle:Security:login')) }}
+                            {% endif %}
+                        </li>
+                    </ul>
+                </li>
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+            <ul class="nav navbar-nav navbar-right">
+                {% set cartProducts = app.session.get('products') %}
+                <li class="hidden-xs">
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <a class="cart-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            <span class="products-amount">{{ cartProducts|length }}</span> - Items<span class="caret"></span>
+                        </a>
+                    {% endif %}
+                    <div>
+                        <ul class="dropdown-menu cart-block dropdown-cart" role="menu">
+                            <span class="cart-content">
+                            {% if cartProducts|length == 0 %}
+                                <p class="text-muted text-center">
+                                    Your cart looks empty
+                                </p>
+                            {% endif %}
+                                {% for product in cartProducts|slice(0, 5) %}
+                                    <li>
+                                        <span class="item">
+                                            <span class="item-left">
+                                                <span class="item-info">
+                                                    <span>{{ product['title'] }}</span>
+                                                    <span>{{ product['price'] }}</span>
+                                                </span>
+                                            </span>
+                                            <span class="item-right">
+                                                <button class="btn btn-xs btn-danger pull-right close-btn"
+                                                        data-product-id="{{ loop.index }}">x</button>
+                                            </span>
+                                        </span>
+                                    </li>
+                                {% endfor %}
+                            </span>
+                            <li class="divider"></li>
+                            <li><button class="btn btn-sm btn-block btn-success buy-btn"
+                                        type="button" data-toggle="modal" data-target="#purchaseModal">Do the purchase</button></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="visible-xs">
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <a data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            <span class="products-amount">{{ cartProducts|length }}</span> - Items<span class="caret"></span>
+                        </a>
+                    {% endif %}
+                    <ul class="dropdown-menu dropdown-cart" role="menu">
+                        <span class="cart-content">
+                        {% if cartProducts|length == 0 %}
+                            <p class="text-muted text-center">
+                                Your cart looks empty
+                            </p>
+                        {% endif %}
+                            {% for product in cartProducts|slice(0, 5) %}
+                                <li>
+                                <span class="item">
+                                    <span class="item-left">
+                                        <span class="item-info">
+                                            <span>{{ product['title'] }}</span>
+                                            <span>{{ product['price'] }}</span>
+                                        </span>
+                                    </span>
+                                    <span class="item-right">
+                                        <button class="btn btn-xs btn-danger pull-right close-btn">x</button>
+                                    </span>
+                                </span>
+                                </li>
+                            {% endfor %}
+                        </span>
+                        <li class="divider"></li>
+                        <li><button class="btn btn-sm btn-block btn-success buy-btn"
+                                    type="button" data-toggle="modal" data-target="#purchaseModal">Do the purchase</button></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>
 <div class="container">
     {% block content %}{% endblock %}
 </div>
+
+<div id="purchaseModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Success</h4>
+            </div>
+            <div class="modal-body">
+                <p>Your purchase was successfully made!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div id="addModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Added</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Product was successfully added to the cart!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

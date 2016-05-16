@@ -1,3 +1,29 @@
 moto_homepage:
     path:     /
     defaults: { _controller: MotoBundle:Product:show }
+moto_add_to_cart:
+    path:     /add-to-cart
+    defaults: { _controller: MotoBundle:Product:addToCart }
+    methods: [POST]
+    options:
+        expose: true
+moto_get_cart:
+    path:     /get-cart
+    defaults: { _controller: MotoBundle:Product:getCart }
+    methods: [POST]
+    options:
+        expose: true
+
+moto_remove_from_cart:
+    path:     /remove-from-cart
+    defaults: { _controller: MotoBundle:Product:removeFromCart }
+    methods: [POST]
+    options:
+        expose: true
+
+moto_purchase:
+    path:     /purchase
+    defaults: { _controller: MotoBundle:Product:purchaseEmail }
+    methods: [POST]
+    options:
+        expose: true

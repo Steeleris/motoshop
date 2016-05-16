@@ -1,5 +1,5 @@
 {
-    "name": "steeler/moto",
+    "name": "moto",
     "license": "proprietary",
     "type": "project",
     "autoload": {
@@ -29,7 +29,9 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "symfony/assetic-bundle": "^2.8",
         "doctrine/doctrine-migrations-bundle": "^1.0",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "symfony/serializer": "^3.0",
+        "friendsofsymfony/jsrouting-bundle": "^1.6"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

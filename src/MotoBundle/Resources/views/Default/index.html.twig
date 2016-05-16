@@ -1,0 +1,39 @@
+{% extends 'MotoBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/650x450&text=Galaxy S5" class="img-responsive">
+                    <div class="caption">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <h3>{{ product.title }}</h3>
+                            </div>
+                            <div class="col-md-6 col-xs-6 price">
+                                <h3>
+                                    <label>${{ product.price }}</label></h3>
+                            </div>
+                        </div>
+                        <p>{{ product.about }}</p>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="btn btn-primary btn-block"><span
+                                            class="glyphicon glyphicon-thumbs-up"></span> Like</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="#" class="btn btn-success btn-block"><span
+                                            class="glyphicon glyphicon-shopping-cart"></span> Buy</a>
+                            </div>
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

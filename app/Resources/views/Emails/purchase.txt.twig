@@ -1,0 +1,12 @@
+Thank you for buying,
+you have bought {% for product in products %}{{ product.title }}{% if not loop.last %}, {% endif %}{% endfor %}{% if products is empty %}nothing{% endif %}.
+
+{% set price = 0 %}
+{% for product in products %}
+    {% set price = price + product.price %}
+{% endfor %}
+
+Total price - ${{ price }}
+
+Best regards,
+MotoShop

@@ -72,9 +72,10 @@ swiftmailer:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
+    bundles:        [ 'MotoBundle' ]
     filters:
         cssrewrite: ~
+
 
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/DoctrineMigrations"

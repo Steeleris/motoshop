@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}MotoShop{% endblock %}</title>
     {% stylesheets
         '../bower_components/bootstrap/dist/css/bootstrap.min.css'
         '../app/Resources/css/navbar.css'
@@ -15,13 +15,15 @@
 <body>
     {% block body %}{% endblock %}
     {% block javascripts %}
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
         {% javascripts
             '../bower_components/jquery/dist/jquery.min.js'
             '../bower_components/bootstrap/dist/js/bootstrap.min.js'
-            '../app/Resources/js/navbar.js' %}
+            '../app/Resources/js/navbar.js'
+            '../app/Resources/js/main.js' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% endblock %}
-
 </body>
 </html>
